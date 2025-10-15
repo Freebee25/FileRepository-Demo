@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>File Dokumen - Demo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md fixed top-0 left-0 w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="dashboard.html" class="text-lg font-bold text-gray-700">Sistem Aplikasi Demo</a>
+
+        <!-- Hamburger -->
+        <button id="menuBtn" class="md:hidden text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 p-2 rounded">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+
+        <!-- Desktop Menu -->
+        <ul id="navMenu" class="hidden md:flex space-x-6 font-medium">
+          <li><a href="dashboard.html" class="text-gray-700 hover:text-blue-600">Home</a></li>
+          <li><a href="upload.html" class="text-gray-700 hover:text-blue-600">Upload Dokumen</a></li>
+          <li><a href="filedokumen.html" class="text-blue-600 font-semibold">Dokumen File</a></li>
+          <li><a id="logoutLink" href="#" class="text-red-600 hover:text-red-800 font-semibold">Logout</a></li>
+        </ul>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobileMenu" class="hidden md:hidden mt-2 border-t border-gray-200">
+        <ul class="flex flex-col space-y-2 py-3 font-medium">
+          <li><a href="dashboard.html" class="block px-3 text-gray-700 hover:text-blue-600">Home</a></li>
+          <li><a href="upload.html" class="block px-3 text-gray-700 hover:text-blue-600">Upload Dokumen</a></li>
+          <li><a href="filedokumen.html" class="block px-3 text-blue-600 font-semibold">Dokumen File</a></li>
+          <li><a id="logoutLinkMobile" href="#" class="block px-3 text-red-600 hover:text-red-800 font-semibold">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Konten -->
+  <main class="flex-grow pt-24 px-4">
+    <div class="max-w-6xl mx-auto bg-white shadow-lg rounded-lg p-6">
+      <h2 class="text-2xl font-semibold text-gray-700 mb-4">Daftar File Dokumen</h2>
+
+      <!-- Notifikasi -->
+      <div class="bg-blue-100 border border-blue-300 text-blue-800 px-4 py-3 rounded mb-4">
+        Selamat datang di halaman file dokumen.
+      </div>
+
+      <!-- Filter dan Pencarian -->
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
+        <input id="searchInput" type="text" placeholder="Cari nama file atau kategori..."
+          class="w-full md:w-1/2 border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-400">
+
+        <select id="filterKategori"
+          class="w-full md:w-1/3 border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-400">
+          <option value="">Semua Kategori</option>
+          <option value="Laporan Bulanan">Laporan Bulanan</option>
+          <option value="Keuangan">Keuangan</option>
+          <option value="Personalia">Personalia</option>
+          <option value="Proyek">Proyek</option>
+        </select>
+      </div>
+
+      <!-- Tabel Dokumen -->
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse border border-gray-200 text-sm md:text-base" id="documentTable">
+          <thead class="bg-gray-100">
+            <tr>
+              <th class="border px-3 py-2 text-left">No</th>
+              <th class="border px-3 py-2 text-left">Nama File</th>
+              <th class="border px-3 py-2 text-left">Kategori</th>
+              <th class="border px-3 py-2 text-left">Ukuran</th>
+              <th class="border px-3 py-2 text-left">Tanggal Upload</th>
+              <th class="border px-3 py-2 text-center">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="documentBody">
+            <!-- Contoh Data -->
+            <tr>
+              <td class="border px-3 py-2">1</td>
+              <td class="border px-3 py-2">laporan_januari.pdf</td>
+              <td class="border px-3 py-2">Laporan Bulanan</td>
+              <td class="border px-3 py-2">1.2 MB</td>
+              <td class="border px-3 py-2">2025-10-14 14:32:10</td>
+              <td class="border px-3 py-2 text-center">
+                <button class="btn-download bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">
+                  Detail & Download
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td class="border px-3 py-2">2</td>
+              <td class="border px-3 py-2">laporan_keuangan.xlsx</td>
+              <td class="border px-3 py-2">Keuangan</td>
+              <td class="border px-3 py-2">856 KB</td>
+              <td class="border px-3 py-2">2025-10-12 09:15:42</td>
+              <td class="border px-3 py-2 text-center">
+                <button class="btn-download bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">
+                  Detail & Download
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td class="border px-3 py-2">3</td>
+              <td class="border px-3 py-2">absensi_staff.xlsx</td>
+              <td class="border px-3 py-2">Personalia</td>
+              <td class="border px-3 py-2">523 KB</td>
+              <td class="border px-3 py-2">2025-10-10 10:44:09</td>
+              <td class="border px-3 py-2 text-center">
+                <button class="btn-download bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">
+                  Detail & Download
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div id="pagination" class="flex justify-center mt-6 space-x-2"></div>
+    </div>
+  </main>
+
+  <script>
+    // Toggle mobile menu
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    menuBtn.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
+
+    // Logout demo
+    document.getElementById("logoutLink").addEventListener("click", () => {
+      alert("Logout berhasil (demo).");
+      window.location.href = "login.html";
+    });
+    document.getElementById("logoutLinkMobile").addEventListener("click", () => {
+      alert("Logout berhasil (demo).");
+      window.location.href = "login.html";
+    });
+
+    // Pagination dan Filter
+    const rowsPerPage = 5;
+    const tableBody = document.getElementById("documentBody");
+    let rows = Array.from(tableBody.querySelectorAll("tr"));
+    const pagination = document.getElementById("pagination");
+
+    function showPage(page) {
+      const start = (page - 1) * rowsPerPage;
+      const end = start + rowsPerPage;
+      rows.forEach((r, i) => {
+        r.style.display = (i >= start && i < end) ? "" : "none";
+      });
+    }
+
+    function renderPagination() {
+      pagination.innerHTML = "";
+      const totalPages = Math.ceil(rows.length / rowsPerPage);
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.textContent = i;
+        btn.className = "px-3 py-1 border rounded hover:bg-blue-100 " +
+          (i === 1 ? "bg-blue-500 text-white" : "bg-white text-gray-700");
+        btn.addEventListener("click", () => {
+          document.querySelectorAll("#pagination button").forEach(b => b.className = "px-3 py-1 border rounded hover:bg-blue-100 bg-white text-gray-700");
+          btn.className = "px-3 py-1 border rounded bg-blue-500 text-white";
+          showPage(i);
+        });
+        pagination.appendChild(btn);
+      }
+    }
+
+    function filterTable() {
+      const keyword = document.getElementById("searchInput").value.toLowerCase();
+      const kategori = document.getElementById("filterKategori").value.toLowerCase();
+      rows = Array.from(document.querySelectorAll("#documentBody tr")).filter(row => {
+        const nama = row.cells[1].textContent.toLowerCase();
+        const kat = row.cells[2].textContent.toLowerCase();
+        return (keyword === "" || nama.includes(keyword) || kat.includes(keyword)) &&
+               (kategori === "" || kat === kategori);
+      });
+      showPage(1);
+      renderPagination();
+    }
+
+    document.getElementById("searchInput").addEventListener("input", filterTable);
+    document.getElementById("filterKategori").addEventListener("change", filterTable);
+
+    showPage(1);
+    renderPagination();
+
+    // 🔹 Tambahan: tombol Detail & Download → menuju download.html
+    document.querySelectorAll('.btn-download').forEach(button => {
+      button.addEventListener('click', () => {
+        window.location.href = 'download.html';
+      });
+    });
+  </script>
+</body>
+</html>

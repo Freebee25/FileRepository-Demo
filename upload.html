@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Dokumen - Sistem Aplikasi Demo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md fixed top-0 left-0 w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo / Title -->
+        <a href="dashboard.html" class="text-lg font-bold text-gray-700">
+          Sistem Aplikasi Demo
+        </a>
+
+        <!-- Hamburger (mobile) -->
+        <button
+          id="menuBtn"
+          class="md:hidden text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 p-2 rounded"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+
+        <!-- Navigation Links -->
+        <ul id="navMenu" class="hidden md:flex space-x-6 font-medium">
+          <li><a href="dashboard.html" class="text-gray-700 hover:text-blue-600">Home</a></li>
+          <li><a href="upload.html" class="text-blue-600 font-semibold">Upload Dokumen</a></li>
+          <li><a href="filedokumen.html" class="text-gray-700 hover:text-blue-600">Dokumen File</a></li>
+          <li>
+            <a id="logoutLink" href="#" class="text-red-600 hover:text-red-800 font-semibold">
+              Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobileMenu" class="hidden md:hidden mt-2 border-t border-gray-200">
+        <ul class="flex flex-col space-y-2 py-3 font-medium">
+          <li><a href="dashboard.html" class="block px-3 text-gray-700 hover:text-blue-600">Home</a></li>
+          <li><a href="upload.html" class="block px-3 text-blue-600 font-semibold">Upload Dokumen</a></li>
+          <li><a href="filedokumen.html" class="block px-3 text-gray-700 hover:text-blue-600">Dokumen File</a></li>
+          <li>
+            <a id="logoutLinkMobile" href="#" class="block px-3 text-red-600 hover:text-red-800 font-semibold">
+              Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="max-w-3xl mx-auto px-6 py-24">
+    <h1 class="text-2xl font-bold text-gray-700 mb-6 text-center">Upload Dokumen</h1>
+
+    <!-- Notifikasi (hanya simulasi demo) -->
+    <div id="notifArea" class="hidden mb-6 p-4 rounded-md text-center"></div>
+
+    <!-- Form Upload -->
+    <form id="uploadForm" class="bg-white p-6 rounded-lg shadow-md space-y-4">
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Tanggal Upload:</label>
+        <input
+          type="text"
+          id="tanggal_upload"
+          class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 px-3 py-2"
+          readonly
+        />
+      </div>
+
+      <div>
+        <label for="file" class="block text-gray-700 font-medium mb-1">Pilih Dokumen:</label>
+        <input
+          type="file"
+          id="file"
+          required
+          class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 px-3 py-2"
+        />
+        <small class="text-gray-500 text-sm">Hanya file PDF, DOCX, XLSX, dan XLS yang diperbolehkan. Maksimal 10MB.</small>
+      </div>
+
+      <div>
+        <label for="kategori" class="block text-gray-700 font-medium mb-1">Kategori Dokumen:</label>
+        <select
+          id="kategori"
+          required
+          class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 px-3 py-2"
+        >
+          <option value="">-- Pilih Kategori --</option>
+          <option value="laporan">Laporan</option>
+          <option value="keuangan">Keuangan</option>
+          <option value="personalia">Personalia</option>
+          <option value="lainnya">Lainnya</option>
+          <option value="tambah">+ Tambah Kategori Baru</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="password" class="block text-gray-700 font-medium mb-1">Password:</label>
+        <input
+          type="password"
+          id="password"
+          required
+          class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 px-3 py-2"
+        />
+      </div>
+
+      <div>
+        <label for="deskripsi" class="block text-gray-700 font-medium mb-1">Deskripsi Dokumen:</label>
+        <textarea
+          id="deskripsi"
+          rows="3"
+          required
+          class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 px-3 py-2"
+        ></textarea>
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
+      >
+        Upload
+      </button>
+    </form>
+  </main>
+
+  <!-- Modal Tambah Kategori -->
+  <div id="kategoriModal" class="hidden fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 w-11/12 max-w-sm shadow-lg">
+      <h2 class="text-lg font-semibold mb-3">Tambah Kategori Baru</h2>
+      <input
+        type="text"
+        id="nama_kategori"
+        placeholder="Masukkan nama kategori"
+        class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+      />
+      <div class="flex justify-end mt-4 space-x-2">
+        <button id="batalModal" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Batal</button>
+        <button id="simpanModal" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Simpan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // Tampilkan tanggal upload saat ini
+    const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+    document.getElementById("tanggal_upload").value = today;
+
+    // Toggle menu mobile
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    menuBtn.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
+
+    // Logout simulasi
+    document.getElementById("logoutLink").addEventListener("click", e => {
+      e.preventDefault();
+      alert("Logout berhasil! (demo)");
+      window.location.href = "login.html";
+    });
+    document.getElementById("logoutLinkMobile").addEventListener("click", e => {
+      e.preventDefault();
+      alert("Logout berhasil! (demo)");
+      window.location.href = "login.html";
+    });
+
+    // Tambah kategori modal
+    const kategori = document.getElementById("kategori");
+    const modal = document.getElementById("kategoriModal");
+    const batalModal = document.getElementById("batalModal");
+    const simpanModal = document.getElementById("simpanModal");
+
+    kategori.addEventListener("change", () => {
+      if (kategori.value === "tambah") {
+        modal.classList.remove("hidden");
+        kategori.value = "";
+      }
+    });
+
+    batalModal.addEventListener("click", () => modal.classList.add("hidden"));
+    simpanModal.addEventListener("click", () => {
+      const namaBaru = document.getElementById("nama_kategori").value.trim();
+      if (namaBaru) {
+        const newOption = document.createElement("option");
+        newOption.value = namaBaru.toLowerCase();
+        newOption.textContent = namaBaru;
+        kategori.insertBefore(newOption, kategori.lastElementChild);
+        kategori.value = namaBaru.toLowerCase();
+        document.getElementById("nama_kategori").value = "";
+        modal.classList.add("hidden");
+      }
+    });
+
+    // Simulasi submit form upload
+    document.getElementById("uploadForm").addEventListener("submit", e => {
+      e.preventDefault();
+      const notif = document.getElementById("notifArea");
+      notif.classList.remove("hidden");
+      notif.classList.add("bg-green-100", "text-green-700", "border", "border-green-300");
+      notif.textContent = "✅ Dokumen berhasil diupload! (simulasi demo)";
+      e.target.reset();
+      setTimeout(() => notif.classList.add("hidden"), 3000);
+    });
+  </script>
+</body>
+</html>

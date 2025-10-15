@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Demo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md fixed top-0 left-0 w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo / Title -->
+        <a href="dashboard.html" class="text-lg font-bold text-gray-700">
+          Sistem Aplikasi Demo
+        </a>
+
+        <!-- Hamburger (mobile) -->
+        <button
+          id="menuBtn"
+          class="md:hidden text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 p-2 rounded"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+
+        <!-- Navigation Links -->
+        <ul id="navMenu" class="hidden md:flex space-x-6 font-medium">
+          <li><a href="dashboard.html" class="text-gray-700 hover:text-blue-600">Home</a></li>
+          <li><a href="upload.html" class="text-gray-700 hover:text-blue-600">Upload Dokumen</a></li>
+          <li><a href="filedokumen.html" class="text-gray-700 hover:text-blue-600">Dokumen File</a></li>
+          <li>
+            <a
+              id="logoutLink"
+              href="#"
+              class="text-red-600 hover:text-red-800 font-semibold"
+            >
+              Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobileMenu" class="hidden md:hidden mt-2 border-t border-gray-200">
+        <ul class="flex flex-col space-y-2 py-3 font-medium">
+          <li><a href="dashboard.html" class="block px-3 text-gray-700 hover:text-blue-600">Home</a></li>
+          <li><a href="upload.html" class="block px-3 text-gray-700 hover:text-blue-600">Upload Dokumen</a></li>
+          <li><a href="filedokumen.html" class="block px-3 text-gray-700 hover:text-blue-600">Dokumen File</a></li>
+          <li>
+            <a
+              id="logoutLinkMobile"
+              href="#"
+              class="block px-3 text-red-600 hover:text-red-800 font-semibold"
+            >
+              Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="max-w-6xl mx-auto px-6 py-24 sm:py-20">
+    <!-- Welcome Alert -->
+    <div class="bg-blue-100 border border-blue-300 text-blue-800 p-4 rounded-md shadow mb-6">
+      <strong class="block font-semibold">Selamat Datang di Sistem Aplikasi</strong>
+      <span id="welcomeMsg">Halo <span class="font-semibold">User</span> 👋</span>
+    </div>
+
+    <!-- Card Statistik -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-8">
+      <div class="bg-blue-500 text-white rounded-lg shadow p-6">
+        <h5 class="text-lg font-semibold mb-2">Jumlah Dokumen</h5>
+        <p class="text-3xl font-bold" id="totalFiles">0</p>
+        <p class="text-sm opacity-80">file tersedia</p>
+      </div>
+    </div>
+
+    <!-- Tabel Dokumen Terbaru -->
+    <div class="bg-white rounded-lg shadow overflow-hidden">
+      <div class="p-4 border-b">
+        <h5 class="text-lg font-semibold text-gray-700">Dokumen Terbaru</h5>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="min-w-full border-collapse">
+          <thead class="bg-gray-50 border-b">
+            <tr>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-600">No</th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-600">Nama File</th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-600">Ukuran</th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-600">Tanggal Upload</th>
+            </tr>
+          </thead>
+          <tbody id="fileTableBody" class="divide-y divide-gray-200"></tbody>
+        </table>
+      </div>
+      <div class="p-4 text-right">
+        <button
+          id="lihatSelengkapnya"
+          class="text-blue-600 hover:text-blue-800 font-medium"
+        >
+          Lihat Selengkapnya &raquo;
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Script Demo -->
+  <script>
+    // Simulasi user login
+    const username = "admin";
+    document.getElementById("welcomeMsg").innerHTML =
+      "Halo <span class='font-semibold'>" + username + "</span> 👋";
+
+    // Data dummy dokumen terbaru
+    const recentFiles = [
+      { nama_file: "laporan_keuangan.pdf", size_file: 1048576, tanggal_upload: "2025-10-10" },
+      { nama_file: "data_stok_barang.xlsx", size_file: 2097152, tanggal_upload: "2025-10-09" },
+      { nama_file: "nota_transaksi.docx", size_file: 524288, tanggal_upload: "2025-10-08" },
+      { nama_file: "foto_produk.png", size_file: 3145728, tanggal_upload: "2025-10-07" },
+      { nama_file: "panduan_pengguna.pdf", size_file: 1572864, tanggal_upload: "2025-10-06" },
+    ];
+
+    // Hitung total dokumen (simulasi)
+    document.getElementById("totalFiles").textContent = recentFiles.length;
+
+    // Tampilkan tabel dokumen terbaru
+    const tableBody = document.getElementById("fileTableBody");
+    if (recentFiles.length === 0) {
+      tableBody.innerHTML =
+        '<tr><td colspan="4" class="text-center py-4 text-gray-500">Tidak ada dokumen terbaru.</td></tr>';
+    } else {
+      recentFiles.forEach((file, index) => {
+        const sizeMB = (file.size_file / (1024 * 1024)).toFixed(2);
+        const row = `
+          <tr class="hover:bg-gray-50">
+            <td class="px-4 py-3 text-sm text-gray-700">${index + 1}</td>
+            <td class="px-4 py-3 text-sm text-gray-700">${file.nama_file}</td>
+            <td class="px-4 py-3 text-sm text-gray-700">${sizeMB} MB</td>
+            <td class="px-4 py-3 text-sm text-gray-700">${file.tanggal_upload}</td>
+          </tr>
+        `;
+        tableBody.insertAdjacentHTML("beforeend", row);
+      });
+    }
+
+    // Tombol Logout (Desktop & Mobile)
+    document.getElementById("logoutLink").addEventListener("click", (e) => {
+      e.preventDefault();
+      alert("Logout berhasil! (demo)");
+      window.location.href = "login.html";
+    });
+    document.getElementById("logoutLinkMobile").addEventListener("click", (e) => {
+      e.preventDefault();
+      alert("Logout berhasil! (demo saja)");
+      window.location.href = "login.html";
+    });
+
+    // Tombol Lihat Selengkapnya
+    document.getElementById("lihatSelengkapnya").addEventListener("click", () => {
+    window.location.href = "filedokumen.html";
+    });
+
+
+    // Toggle menu mobile
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    menuBtn.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+    });
+  </script>
+</body>
+</html>

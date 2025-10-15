@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Detail Dokumen - Demo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md fixed top-0 left-0 w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="dashboard.html" class="text-lg font-bold text-gray-700">
+          Sistem Aplikasi Demo
+        </a>
+
+        <!-- Hamburger -->
+        <button id="menuBtn"
+          class="md:hidden text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 p-2 rounded">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6"
+            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+
+        <!-- Desktop Menu -->
+        <ul id="navMenu" class="hidden md:flex space-x-6 font-medium">
+          <li><a href="dashboard.html" class="text-gray-700 hover:text-blue-600">Home</a></li>
+          <li><a href="upload.html" class="text-gray-700 hover:text-blue-600">Upload Dokumen</a></li>
+          <li><a href="filedokumen.html" class="text-gray-700 hover:text-blue-600">Dokumen File</a></li>
+          <li><a id="logoutLink" href="#" class="text-red-600 hover:text-red-800 font-semibold">Logout</a></li>
+        </ul>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobileMenu" class="hidden md:hidden mt-2 border-t border-gray-200">
+        <ul class="flex flex-col space-y-2 py-3 font-medium">
+          <li><a href="dashboard.html" class="block px-3 text-gray-700 hover:text-blue-600">Home</a></li>
+          <li><a href="upload.html" class="block px-3 text-gray-700 hover:text-blue-600">Upload Dokumen</a></li>
+          <li><a href="filedokumen.html" class="block px-3 text-gray-700 hover:text-blue-600">Dokumen File</a></li>
+          <li><a id="logoutLinkMobile" href="#" class="block px-3 text-red-600 hover:text-red-800 font-semibold">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <div class="max-w-3xl mx-auto mt-24 px-4 sm:px-6 lg:px-8">
+    <div id="notifArea" class="mb-4"></div>
+
+    <h2 class="text-2xl font-semibold mb-2">Detail File</h2>
+    <p class="text-gray-500 mb-6">Informasi lengkap file terkait</p>
+
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <div class="bg-gray-50 px-6 py-3 border-b">
+        <strong class="text-gray-700">Download</strong>
+      </div>
+      <div class="px-6 py-5 space-y-3">
+        <p><strong>Nama File Sumber:</strong> dokumen_demo.pdf</p>
+        <p><strong>Ukuran File:</strong> 125 KB</p>
+        <p><strong>Kategori:</strong> Dokumen Rahasia</p>
+        <p><strong>Tanggal Upload:</strong> 14 Oktober 2025</p>
+        <p><strong>Keterangan:</strong> File contoh untuk demo sistem aplikasi.</p>
+
+        <div class="flex flex-wrap justify-between mt-6 gap-3">
+          <a href="filedokumen.html" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md flex items-center gap-2">
+            ⬅ Kembali
+          </a>
+
+          <div class="flex gap-2">
+            <!-- Tombol Hapus (hanya admin) -->
+            <button id="deleteBtn" class="hidden bg-gray-100 text-red-600 border border-red-300 hover:bg-red-50 px-4 py-2 rounded-md">
+              🗑 Hapus File
+            </button>
+
+            <!-- Tombol Download -->
+            <button id="downloadBtn" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md flex items-center gap-2">
+              ⬇ Download File
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Password -->
+  <div id="passwordModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div class="bg-white rounded-lg shadow-lg w-11/12 max-w-md p-6 relative">
+      <h3 class="text-lg font-semibold mb-4">Masukkan Password File</h3>
+      <input id="passwordInput" type="password" placeholder="Password File"
+        class="w-full border border-gray-300 rounded-md px-3 py-2 mb-4 focus:ring-2 focus:ring-blue-400 outline-none">
+      <div class="flex justify-end gap-2">
+        <button id="cancelModal" class="px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300">Batal</button>
+        <button id="submitDecrypt" class="px-4 py-2 rounded-md bg-green-500 hover:bg-green-600 text-white">Download</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Konfirmasi Hapus -->
+  <div id="deleteModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div class="bg-white rounded-lg shadow-lg w-11/12 max-w-md p-6">
+      <h3 class="text-lg font-semibold mb-3">Konfirmasi Hapus</h3>
+      <p>Apakah Anda yakin ingin menghapus file <strong>dokumen_demo.pdf</strong>?</p>
+      <div class="flex justify-end mt-4 gap-2">
+        <button id="cancelDelete" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md">Batal</button>
+        <button id="confirmDelete" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md">Hapus</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Simulasi role user
+    const userRole = "admin"; // ganti ke "user" jika ingin non-admin
+
+    // Navbar toggle
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    menuBtn.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
+
+    // Tampilkan tombol hapus jika admin
+    if (userRole === "admin") {
+      document.getElementById("deleteBtn").classList.remove("hidden");
+    }
+
+    // Logout (demo)
+    document.getElementById("logoutLink").onclick =
+    document.getElementById("logoutLinkMobile").onclick = () => {
+      alert("Logout berhasil (demo).");
+      window.location.href = "login.html";
+    };
+
+    // Modal password
+    const passwordModal = document.getElementById("passwordModal");
+    const downloadBtn = document.getElementById("downloadBtn");
+    const cancelModal = document.getElementById("cancelModal");
+    const submitDecrypt = document.getElementById("submitDecrypt");
+
+    downloadBtn.onclick = () => passwordModal.classList.remove("hidden");
+    cancelModal.onclick = () => passwordModal.classList.add("hidden");
+
+    submitDecrypt.onclick = () => {
+      passwordModal.classList.add("hidden");
+      const notif = document.getElementById("notifArea");
+      notif.innerHTML = `
+        <div class='bg-green-100 border border-green-300 text-green-800 px-4 py-3 rounded-md'>
+          ✅ File berhasil didekripsi dan diunduh! (simulasi)
+        </div>`;
+      setTimeout(() => notif.innerHTML = "", 4000);
+    };
+
+    // Modal hapus
+    const deleteModal = document.getElementById("deleteModal");
+    const deleteBtn = document.getElementById("deleteBtn");
+    const cancelDelete = document.getElementById("cancelDelete");
+    const confirmDelete = document.getElementById("confirmDelete");
+
+    deleteBtn.onclick = () => deleteModal.classList.remove("hidden");
+    cancelDelete.onclick = () => deleteModal.classList.add("hidden");
+    confirmDelete.onclick = () => {
+      deleteModal.classList.add("hidden");
+      alert("File berhasil dihapus! (simulasi)");
+      window.location.href = "filedokumen.html";
+    };
+  </script>
+
+</body>
+</html>
